@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Stardos+Stencil:wght@400;700&display=swap');
 :root {
   --red: #b81725;
   --red-dark: #781018;
@@ -56,7 +57,7 @@ button { cursor: pointer; }
   border: 0; border-radius: var(--radius-xl);
   background:
     linear-gradient(rgba(7, 42, 35, .76), rgba(7, 42, 35, .82)),
-    url('img/mapa.png') center/contain no-repeat,
+    url('../img/mapa.png') center/contain no-repeat,
     radial-gradient(circle at 20% 20%, rgba(255,255,255,.12) 0 1px, transparent 1px),
     linear-gradient(135deg, var(--green), var(--green-dark));
   background-size: auto, min(78%, 760px), 24px 24px, auto;
@@ -65,7 +66,7 @@ button { cursor: pointer; }
 }
 .board::after, .panel.green::after {
   content:''; position:absolute; inset:0; pointer-events:none; opacity:.18;
-  background-image: url('img/otros/textura-verde.png'), radial-gradient(circle at 2px 2px, rgba(255,255,255,.35) 1px, transparent 0);
+  background-image: url('../img/otros/textura-verde.png'), radial-gradient(circle at 2px 2px, rgba(255,255,255,.35) 1px, transparent 0);
   background-size: 360px 360px, 18px 18px; mix-blend-mode: screen;
 }
 .floating-faces { position:absolute; inset:0; z-index:0; pointer-events:none; }
@@ -180,3 +181,35 @@ input[type="file"] {
 .file-chip::before { content: '📎'; margin-right: 6px; }
 .talent-card h3, .profile h2 { letter-spacing: -.03em; }
 @media (max-width: 760px) { .split { grid-template-columns: 1fr; } }
+
+/* Expediente militar — capa de identidad CAZA NICA */
+:root { --paper: #d4b989; --paper-deep:#a9824f; --green:#274b3c; --green-dark:#102c24; }
+body {
+  font-family: "Special Elite", Georgia, serif;
+  background-color:#6b4226;
+  background-image: linear-gradient(90deg,rgba(58,31,14,.65),transparent 8%,transparent 92%,rgba(58,31,14,.65)), repeating-linear-gradient(7deg,rgba(255,255,255,.025) 0 2px,rgba(0,0,0,.035) 2px 5px), linear-gradient(90deg,#79502f,#a87543 10%,#875732 50%,#a87543 90%,#79502f);
+}
+.app-shell { width:min(1280px,96vw); }
+.topbar { background:linear-gradient(rgba(22,57,46,.97),rgba(10,39,31,.97)); color:#ead8b7; border:10px solid #9a693d; border-radius:4px; box-shadow:inset 0 0 35px #071a15,0 12px 30px #301b0e; }
+.topbar h1 { font-family:"Stardos Stencil", Impact, sans-serif; letter-spacing:.08em; text-shadow:3px 3px #101b16; }
+.brand img { width:145px; }
+.board { border:14px solid #9a693d; border-radius:3px; box-shadow:inset 0 0 50px #071a15,0 16px 35px #301b0e; }
+.role-card,.talent-card,.panel:not(.green),.modal-card { background-color:var(--paper); background-image:linear-gradient(105deg,transparent 65%,rgba(105,67,31,.12)),repeating-linear-gradient(0deg,rgba(65,42,22,.025) 0 1px,transparent 1px 4px); border:1px solid #9e794d; border-radius:4px; box-shadow:3px 5px 0 rgba(49,29,13,.45),0 16px 35px rgba(0,0,0,.25); }
+.role-card { transform:rotate(var(--tilt,-1deg)); color:#20170e; }
+.role-card:nth-child(2){--tilt:1deg}.role-card:nth-child(3){--tilt:-.5deg}
+.role-card::after,.panel:not(.green)::after,.talent-card::after { content:"CONFIDENCIAL"; position:absolute; right:12px; bottom:16px; color:#9d1820; border:4px double #9d1820; padding:4px 9px; font:bold 1rem "Stardos Stencil",sans-serif; transform:rotate(-9deg); opacity:.38; pointer-events:none; }
+.role-card::before,.talent-card::before,.panel::before { height:0; }
+.avatar-stamp { border-radius:2px; border:8px solid #ece0c8; filter:sepia(.2); }
+.panel.green { border-radius:4px; border:1px solid #476e5b; }
+.panel.green::before { content:""; position:absolute; width:95px; height:34px; top:-6px; right:22px; background:url('../img/otros/clip.png') center/contain no-repeat; z-index:3; }
+.panel h2,.talent-card h3 { font-family:"Stardos Stencil",Impact,sans-serif; text-transform:uppercase; }
+input,select,textarea { border:0; border-bottom:2px dotted #604a31; border-radius:0; background:rgba(255,249,231,.55); }
+.primary,.ghost { border-radius:2px; text-transform:uppercase; font-family:"Stardos Stencil",sans-serif; letter-spacing:.05em; }
+.dossier-heading { grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; border-bottom:3px double #3b2b1b; padding-bottom:8px; }
+.dossier-heading strong { font:700 1.55rem "Stardos Stencil",sans-serif; }
+.dossier-heading span { color:#9d1820; border:3px solid; padding:3px 8px; transform:rotate(-4deg); }
+.form-grid .photo-field { grid-row:span 2; border:2px dashed rgba(255,255,255,.35); padding:12px; }
+.cancel-btn { background:#40372d; color:#fff; }
+.audit-wrap { overflow-x:auto; }
+.audit-table th { background:#173e32;color:#f0dec2;font-family:"Stardos Stencil"; }
+@media(max-width:760px){.topbar{border-width:6px}.board{padding:18px;border-width:8px}.role-grid{gap:18px}.role-card{min-height:auto}.dossier-heading{align-items:flex-start;gap:8px}}
