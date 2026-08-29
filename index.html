@@ -9,16 +9,16 @@
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <button id="backBtn" class="ghost hidden" type="button">← Volver</button>
+      <button id="backBtn" class="ghost hidden" type="button">Cerrar sesión</button>
       <h1 id="screenTitle">¿QUÉ SOS?</h1>
-      <div class="brand" aria-label="CAZA NICA"><span>CAZA</span><small>NICA</small></div>
+      <div class="brand" aria-label="CAZA NICA"><img src="img/logo.png" alt="CAZA NICA" onerror="this.hidden=true; this.nextElementSibling.hidden=false"><div class="brand-fallback" hidden><span>CAZA</span><small>NICA</small></div></div>
     </header>
 
     <main id="app"></main>
   </div>
 
   <template id="logoTemplate">
-    <div class="mini-logo"><span>CAZA</span><small>NICA</small></div>
+    <div class="mini-logo"><img src="img/logo.png" alt="CAZA NICA"><div class="brand-fallback"><span>CAZA</span><small>NICA</small></div></div>
   </template>
 
   <script src="app.js"></script>
