@@ -110,8 +110,19 @@ textarea { min-height: 86px; resize: vertical; }
 .tabs { display:flex; gap: 10px; flex-wrap:wrap; margin-bottom: 16px; }
 .filter-menu { position: sticky; top: 15px; align-self:start; }
 .filter-list { display:grid; gap:14px; margin:0; padding:0; list-style:none; }
-.talent-list { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:18px; }
-.talent-card { padding: 16px; }
+.talent-results { min-width: 0; }
+.talent-results > h2 { margin-top: 0; text-align: center; }
+.talent-list {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 280px));
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+}
+.talent-list > p { grid-column: 1 / -1; text-align: center; }
+.talent-card { display: flex; flex-direction: column; width: 100%; padding: 16px; }
+.talent-card .primary { align-self: flex-start; margin-top: auto; }
 .photo { height: 160px; border-radius: 22px; background: var(--photo, #eee) center/cover; display:grid; place-items:center; font-size:4rem; margin-bottom: 10px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
 .badge { display:inline-block; border-radius:999px; background:linear-gradient(135deg, var(--red), #e04755); color:#fff; padding:5px 10px; margin:3px; font-size:.86rem; font-weight:800; letter-spacing:0; }
 .profile { display:grid; grid-template-columns: 260px 1fr; gap:24px; }
@@ -277,3 +288,10 @@ footer { margin:28px calc((100vw - min(1120px,92vw)) / -2) 0; padding:18px; text
 .primary { background:var(--red);box-shadow:2px 3px 0 var(--red-dark); }.primary.alt{background:var(--green);box-shadow:2px 3px 0 var(--green-dark)}
 .badge{background:var(--red);border-radius:2px}.detail-item{border-radius:2px;background:rgba(255,250,236,.45)}
 @media(max-width:760px){.masthead{align-items:center;padding-left:0}.country-mark{display:none}.wordmark{width:220px}.wordmark strong{font-size:4.2rem}.masthead p{font-size:.8rem}.topbar{min-width:0;width:88%;grid-template-columns:1fr;margin-top:18px}.header-sight{display:none}.topbar .ghost{order:2;margin-top:8px}.board{padding:62px 12% 30px}.role-grid{grid-template-columns:1fr;gap:36px}.role-card{width:min(250px,100%);margin:auto}.floating-faces{display:none}footer{font-size:.78rem}}
+@media (max-width: 980px) and (min-width: 761px) {
+  .dashboard { grid-template-columns: 240px minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .talent-results > h2 { margin-top: 8px; }
+  .talent-list { grid-template-columns: minmax(0, 320px); }
+}
