@@ -87,7 +87,15 @@ function renderAuth(role) {
       <label>Usuario<input name="user" required></label><label>Contraseña<input type="password" name="pass" required></label>
       <button class="primary" type="submit">Entrar</button><button class="primary alt" id="registerBtn" type="button">Registrar</button>
     </form><div id="authMsg" class="muted"></div></div></section>`;
-  loginForm.onsubmit = e => { e.preventDefault(); const fd = Object.fromEntries(new FormData(loginForm)); const u = db().users.find(x => x.user === fd.user && x.pass === fd.pass); if (!u) return authMsg.textContent = 'Credenciales incorrectas.'; trace(u.user, 'Inició sesión', u.role); renderDashboard(u); };
+  loginForm.onsubmit = e => {
+    e.preventDefault();
+    const fd = Object.fromEntries(new FormData(loginForm));
+    const u = db().users.find(x => x.user === fd.user && x.pass === fd.pass);
+    if (!u) return authMsg.textContent = 'Credenciales incorrectas.';
+    if (u.role !== role && u.role !== 'admin') return authMsg.textContent = `Este acceso es para ${roles[role]}. Seleccioná el tipo de perfil correcto para iniciar sesión.`;
+    trace(u.user, 'Inició sesión', u.role);
+    renderDashboard(u);
+  };
   registerBtn.onclick = () => renderRegister(role);
 }
 
@@ -103,7 +111,8 @@ function renderRegister(role) {
   if (role === 'presa') fields += `<label>Ruta/foto de perfil<input name="fotoFile" type="file" accept="image/*"><small class="hint">Se registrará como img/profile/usuario_archivo.</small></label>` + field('cedula','Número de cédula') + field('locacion','Locación') + field('nombre','Nombre') + selectField('profesion','Profesión', commonProfessions) + field('domicilio','Domicilio') + `<label>Nivel educativo/técnico<select name="educacion"><option>Primaria</option><option>Secundaria</option><option>Universitario</option><option>Certificación técnica</option></select></label><label class="full">Cartas de recomendación<input name="recomendacionFiles" type="file" accept=".pdf,.doc,.docx,image/*" multiple><small class="hint">PDF, Word o imagen. Se registran en letterprofile con el nombre del usuario.</small></label><label class="full">Expectativa de trabajo<select name="expectativas" multiple size="5">${workExpectations.map(x => `<option value="${x}">${x}</option>`).join('')}</select><small class="hint">Podés seleccionar varias opciones.</small></label><label class="full">Motivo de inscripción<textarea name="motivo"></textarea></label><label>Condición física / médica<input name="condicion" placeholder="peso, altura, padecimientos"></label><label>Género<select name="genero"><option value="">Seleccioná</option><option>Masculino</option><option>Femenino</option></select></label>${field('nacimiento','Fecha nacimiento','date')}<label>Teléfono<input name="telefono"></label><label>Correo<input name="correo" type="email"></label><label class="full">Experiencia<textarea name="experiencia" placeholder="Ejemplo: 3 años atendiendo clientes, manejo de caja y control de inventario en tienda minorista."></textarea></label><label class="full">Conocimientos<textarea name="conocimientos" placeholder="Ejemplo: Excel intermedio, facturación, fibra óptica, redes sociales y atención por WhatsApp Business."></textarea></label>`;
   if (role === 'cazador') fields += field('empresa','Nombre de empresa') + `<label>Sector<select name="sector"><option>Tecnología</option><option>Construcción</option><option>Salud</option><option>Educación</option><option>Comercio</option></select></label>` + field('ubicacion','Ubicación') + field('domicilio','Domicilio') + field('horario','Horario de atención') + field('logo','Ruta del logo','text','placeholder="img/logo.png"');
   if (role === 'cazadorNatural') fields += field('nombre','Nombre y apellido') + field('correo','Correo','email') + field('telefono','Teléfono') + field('departamento','Departamento') + field('ciudad','Ciudad') + field('direccion','Dirección específica') + `<label class="full">Motivo de búsqueda<textarea name="motivo"></textarea></label>` + `<label>Ruta/foto<input name="fotoFile" type="file" accept="image/*"><small class="hint">Se registrará como img/profile/usuario_archivo.</small></label>`;
-  app.innerHTML = `<form id="regForm" class="panel form-grid">${fields}<button class="primary full" type="submit">Crear perfil</button></form>`;
+  app.innerHTML = `<form id="regForm" class="panel form-grid">${fields}<div class="actions full"><button class="primary" type="submit">Crear perfil</button><button class="ghost" id="cancelRegisterBtn" type="button">Cancelar</button></div></form>`;
+  cancelRegisterBtn.onclick = () => renderAuth(role);
   regForm.onsubmit = async e => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -131,18 +140,30 @@ function recommendationLinks(recs) {
 }
 
 function renderDashboard(user) {
-  setTitle(`Panel ${roles[user.role]}`, false);
+  setTitle(`Panel ${roles[user.role]}`, true, 'Cerrar sesión');
   if (user.role === 'admin') return renderAdmin(user);
   if (user.role === 'presa') return renderPresa(user);
   const talents = db().users.filter(u => u.role === 'presa');
-  app.innerHTML = `<section class="dashboard"><aside class="panel filter-menu"><h2>Filtros de caza</h2><ul class="filter-list"><li><label>Búsqueda general<input id="fText" placeholder="Nombre, habilidad, ciudad..."></label></li><li><label>Profesión<select id="fCat"><option value="">Todas</option>${commonProfessions.map(x => `<option value="${x}">${x}</option>`).join('')}${uniqueOptions(talents, 'profesion')}</select></label></li><li><label>Nivel educativo<select id="fEdu"><option value="">Todos</option>${uniqueOptions(talents, 'educacion')}</select></label></li><li><label>Locación<select id="fLoc"><option value="">Todas</option>${uniqueOptions(talents, 'locacion')}</select></label></li><li><label>Género<select id="fGen"><option value="">Todos</option><option>Masculino</option><option>Femenino</option></select></label></li><li><label>Expectativa<select id="fWork"><option value="">Todas</option>${workExpectations.map(x => `<option value="${x}">${x}</option>`).join('')}</select></label></li><li class="split"><label>Edad mínima<input id="fMinAge" type="number" min="16" placeholder="18"></label><label>Edad máxima<input id="fMaxAge" type="number" min="16" placeholder="60"></label></li></ul><button class="primary alt" id="filterBtn">Filtrar</button></aside><div><h2>Presas disponibles</h2><div id="talentList" class="talent-list"></div></div></section>`;
+  const isNaturalHunter = user.role === 'cazadorNatural';
+  const filterTitle = isNaturalHunter ? 'Filtros para contratar un servicio' : 'Filtros para encontrar talento';
+  const resultsTitle = isNaturalHunter ? 'Servicios disponibles' : 'Presas disponibles';
+  const helperText = isNaturalHunter
+    ? 'Como persona natural, priorizá oficio, servicio ofrecido, ubicación y disponibilidad por proyecto.'
+    : 'Como empresa, priorizá profesión, educación, experiencia, expectativa laboral y rango de edad.';
+  const companyFilters = `<li><label>Nivel educativo<select id="fEdu"><option value="">Todos</option>${uniqueOptions(talents, 'educacion')}</select></label></li><li><label>Género<select id="fGen"><option value="">Todos</option><option>Masculino</option><option>Femenino</option></select></label></li><li class="split"><label>Edad mínima<input id="fMinAge" type="number" min="16" placeholder="18"></label><label>Edad máxima<input id="fMaxAge" type="number" min="16" placeholder="60"></label></li>`;
+  const naturalFilters = `<li><label>Modalidad del servicio<select id="fWork"><option value="">Todas</option><option>Por proyecto</option><option>Freelance</option><option>Fines de semana</option><option>Medio tiempo presencial</option><option>Remoto</option></select></label></li><li><label>Experiencia mínima<input id="fExperience" placeholder="Ej: 2 años, instalaciones, eventos..."></label></li>`;
+  const sharedWorkFilter = isNaturalHunter ? naturalFilters : `<li><label>Expectativa laboral<select id="fWork"><option value="">Todas</option>${workExpectations.map(x => `<option value="${x}">${x}</option>`).join('')}</select></label></li>`;
+  app.innerHTML = `<section class="dashboard"><aside class="panel filter-menu"><h2>${filterTitle}</h2><p class="muted">${helperText}</p><ul class="filter-list"><li><label>Búsqueda general<input id="fText" placeholder="Nombre, habilidad, ciudad..."></label></li><li><label>${isNaturalHunter ? 'Servicio u oficio' : 'Profesión'}<select id="fCat"><option value="">Todas</option>${commonProfessions.map(x => `<option value="${x}">${x}</option>`).join('')}${uniqueOptions(talents, 'profesion')}</select></label></li><li><label>Locación<select id="fLoc"><option value="">Todas</option>${uniqueOptions(talents, 'locacion')}</select></label></li>${sharedWorkFilter}${isNaturalHunter ? '' : companyFilters}</ul><button class="primary alt" id="filterBtn">Filtrar</button></aside><div><h2>${resultsTitle}</h2><div id="talentList" class="talent-list"></div></div></section>`;
   let currentTalents = talents;
   const draw = list => { currentTalents = list; talentList.innerHTML = list.map((t,i) => card(t,i)).join('') || '<p>No hay resultados.</p>'; };
   draw(talents);
   filterBtn.onclick = () => {
-    const terms = [fText.value, fCat.value, fEdu.value, fLoc.value, fGen.value, fWork.value].filter(Boolean).map(v => v.toLowerCase());
-    const minAge = Number(fMinAge.value) || 0;
-    const maxAge = Number(fMaxAge.value) || 200;
+    const values = [fText.value, fCat.value, fLoc.value, fWork.value];
+    if (!isNaturalHunter) values.push(fEdu.value, fGen.value);
+    if (isNaturalHunter) values.push(fExperience.value);
+    const terms = values.filter(Boolean).map(v => v.toLowerCase());
+    const minAge = !isNaturalHunter && fMinAge.value ? Number(fMinAge.value) : 0;
+    const maxAge = !isNaturalHunter && fMaxAge.value ? Number(fMaxAge.value) : 200;
     trace(user.user, 'Aplicó filtros', terms.join(', ') || 'sin filtro');
     draw(talents.filter(t => {
       const profileText = JSON.stringify(t.profile).toLowerCase();
