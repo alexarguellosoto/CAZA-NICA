@@ -213,3 +213,67 @@ input,select,textarea { border:0; border-bottom:2px dotted #604a31; border-radiu
 .audit-wrap { overflow-x:auto; }
 .audit-table th { background:#173e32;color:#f0dec2;font-family:"Stardos Stencil"; }
 @media(max-width:760px){.topbar{border-width:6px}.board{padding:18px;border-width:8px}.role-grid{gap:18px}.role-card{min-height:auto}.dossier-heading{align-items:flex-start;gap:8px}}
+
+/* Dirección visual 2026 — archivo de exploración sobre papel */
+:root {
+  --red: #9f251c;
+  --red-dark: #6f1b16;
+  --green: #153d2d;
+  --green-dark: #09271d;
+  --green-soft: #526b55;
+  --cork: #a17e50;
+  --paper: #e8ddc6;
+  --paper-deep: #c8b58f;
+  --ink: #173126;
+  --cream: #f3ecdd;
+  --shadow: 0 12px 20px rgba(28, 31, 22, .2);
+  --radius-xl: 4px;
+  --radius-lg: 4px;
+  --radius-md: 3px;
+}
+body {
+  color: var(--ink);
+  background: #efe8d9;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(108, 81, 45, .09) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 75% 65%, rgba(108, 81, 45, .07) 0 1px, transparent 1.5px),
+    linear-gradient(95deg, rgba(255,255,255,.45), transparent 35%, rgba(127,102,65,.07));
+  background-size: 9px 9px, 13px 13px, auto;
+}
+.topography { position:fixed; inset:0 auto auto 0; width:35vw; height:230px; opacity:.18; pointer-events:none; background:repeating-radial-gradient(ellipse at -10% 0%, transparent 0 12px,#8c7654 13px 14px,transparent 15px 23px); mask-image:linear-gradient(90deg,#000,transparent); }
+.app-shell { width:min(1120px,92vw); padding:28px 0 0; }
+.masthead { position:relative; min-height:150px; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; padding-left:8px; }
+.wordmark { width:270px; text-align:center; transform:rotate(-1deg); }
+.wordmark strong { display:block; color:var(--green-dark); font:700 5.2rem/.72 "Stardos Stencil",Impact,sans-serif; letter-spacing:-.07em; text-shadow:1px 1px rgba(255,255,255,.65); }
+.target-letter { position:relative; color:var(--green-dark); }
+.target-letter::after { content:'•'; position:absolute; color:var(--red); font:2.3rem/1 serif; left:50%; top:49%; transform:translate(-50%,-50%); text-shadow:0 0 0 var(--red); }
+.wordmark-rule { display:flex; align-items:center; gap:10px; margin-top:15px; }
+.wordmark-rule i { height:3px; background:var(--green); flex:1; position:relative; }
+.wordmark-rule i:last-child::after { content:'➤'; position:absolute; right:-5px; top:-12px; }
+.wordmark-rule b { color:var(--red); font:700 2rem/1 "Stardos Stencil"; letter-spacing:.08em; }
+.masthead p { margin:13px 0 0 12px; text-transform:uppercase; font-weight:700; letter-spacing:.08em; }
+.country-mark { position:absolute; right:4%; top:14px; width:160px; height:120px; display:grid; place-items:center; color:rgba(21,61,45,.12); border:20px solid rgba(21,61,45,.22); border-radius:44% 31% 53% 40%; transform:rotate(-12deg); font:700 2rem "Stardos Stencil"; clip-path:polygon(13% 24%,31% 11%,47% 19%,66% 8%,94% 19%,84% 48%,89% 77%,60% 87%,40% 74%,24% 84%,8% 61%); }
+.topbar { position:relative; grid-template-columns:160px 1fr 160px; margin:24px auto -28px; width:55%; min-width:520px; z-index:3; padding:13px 20px 11px; color:var(--cream); background:linear-gradient(#214b39,#0c2f23); border:2px solid #617361; border-radius:3px; box-shadow:0 4px 0 #0a2119,0 10px 20px rgba(0,0,0,.25); }
+.topbar::before,.topbar::after { content:''; position:absolute; top:30px; width:32px; height:18px; background:#123629; border-bottom:2px solid #6f7c67; }
+.topbar::before { left:-32px; clip-path:polygon(0 100%,100% 0,100% 100%); }.topbar::after{right:-32px;clip-path:polygon(0 0,100% 100%,0 100%)}
+.topbar h1 { font-size:clamp(1.5rem,3vw,2.25rem); letter-spacing:.05em; text-shadow:2px 2px #071b14; }
+.header-sight { position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:2rem; color:#a7966f; }
+.brand { display:none; }
+.ghost { background:var(--paper); border:1px solid #887354; box-shadow:2px 3px rgba(0,0,0,.2); padding:9px 12px; }
+.board { min-height:390px; padding:68px 11% 34px; border:2px solid #65705b; background:linear-gradient(rgba(9,43,31,.9),rgba(8,40,29,.94)),radial-gradient(circle at 45% 55%,rgba(209,197,162,.25),transparent 36%),linear-gradient(135deg,#284f3c,#08281d); box-shadow:inset 0 0 0 9px #123629,inset 0 0 0 11px #849078,0 10px 18px rgba(0,0,0,.24); overflow:visible; }
+.board::before { content:''; position:absolute; inset:13px; border:1px solid rgba(206,194,157,.48); pointer-events:none; }
+.board::after { opacity:.12; }
+.floating-faces { opacity:.1; filter:grayscale(1) sepia(1); overflow:hidden; }.floating-face{width:90px;height:90px;box-shadow:none;border-radius:0}.floating-face::after{display:none}
+.role-grid { grid-template-columns:repeat(3,1fr); gap:70px; min-height:270px; align-items:center; }
+.role-card { min-height:250px; padding:22px 14px 14px; color:var(--green-dark); background:#e9e0cc; border:7px solid #d2c4a7; outline:1px solid #796e55; border-radius:3px; box-shadow:3px 5px 8px rgba(0,0,0,.4); transform:none; overflow:visible; }
+.role-card:nth-child(2),.role-card:nth-child(3){transform:none}.role-card:hover { transform:translateY(-7px) rotate(-1deg); box-shadow:5px 12px 18px rgba(0,0,0,.42); }
+.role-card::before { display:none; }.role-card::after{display:none}
+.pin { position:absolute; width:22px; height:22px; border-radius:50%; top:-17px; left:50%; transform:translateX(-50%); background:radial-gradient(circle at 35% 30%,#d35b45 0 12%,#aa281d 25%,#79170f 72%); box-shadow:0 3px 4px rgba(0,0,0,.55); }
+.avatar-stamp { width:120px;height:120px;margin:0 auto 8px;background:transparent;border:0;box-shadow:none;filter:none; }
+.avatar-stamp::after { display:none; }.avatar-stamp svg{width:100%;height:100%;fill:var(--green-dark);stroke:var(--green-dark);stroke-width:5;stroke-linejoin:round;}
+.role-card h2 { font:700 1.45rem/1 "Stardos Stencil"; text-transform:uppercase; letter-spacing:.02em; }.role-card p{margin:3px 0 8px;color:var(--red);font:bold 1rem "Stardos Stencil";text-transform:uppercase}.role-symbol{display:block;font-size:1.35rem}
+footer { margin:28px calc((100vw - min(1120px,92vw)) / -2) 0; padding:18px; text-align:center; color:#d9cdb3; background:var(--green-dark); letter-spacing:.04em; }footer span{margin:0 15px;color:#9ca58c}
+.auth-layout,.dashboard { margin-top:28px; }.panel:not(.green),.talent-card,.modal-card { background-color:#e8ddc6; }.panel h2,.talent-card h3{color:var(--green-dark)}
+.primary { background:var(--red);box-shadow:2px 3px 0 var(--red-dark); }.primary.alt{background:var(--green);box-shadow:2px 3px 0 var(--green-dark)}
+.badge{background:var(--red);border-radius:2px}.detail-item{border-radius:2px;background:rgba(255,250,236,.45)}
+@media(max-width:760px){.masthead{align-items:center;padding-left:0}.country-mark{display:none}.wordmark{width:220px}.wordmark strong{font-size:4.2rem}.masthead p{font-size:.8rem}.topbar{min-width:0;width:88%;grid-template-columns:1fr;margin-top:18px}.header-sight{display:none}.topbar .ghost{order:2;margin-top:8px}.board{padding:62px 12% 30px}.role-grid{grid-template-columns:1fr;gap:36px}.role-card{width:min(250px,100%);margin:auto}.floating-faces{display:none}footer{font-size:.78rem}}

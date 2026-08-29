@@ -71,13 +71,20 @@ function floatingFaces() {
 function renderLanding() {
   setTitle('¿QUÉ SOS?');
   app.innerHTML = `<section class="board">${floatingFaces()}<div class="role-grid">
-    ${roleButton('cazador', 'CAZADOR (EMRO)', '🏢')}
-    ${roleButton('cazadorNatural', 'CAZADOR (PERSONA NATURAL)', '🧭')}
-    ${roleButton('presa', 'PRESA (TRABAJADOR)', '🧑‍🔧')}
+    ${roleButton('presa', 'Cazador', 'Extranjero', 'traveler')}
+    ${roleButton('cazadorNatural', 'Cazador', 'Nacional', 'local')}
+    ${roleButton('cazador', 'Empresa', 'Organización', 'company')}
   </div></section>`;
   document.querySelectorAll('[data-role]').forEach(btn => btn.onclick = () => renderAuth(btn.dataset.role));
 }
-function roleButton(role, label, icon) { return `<button class="role-card" data-role="${role}"><div class="avatar-stamp">${icon}</div><h2>${label}</h2></button>`; }
+function roleButton(role, label, subtitle, icon) {
+  const icons = {
+    traveler: '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="31" r="15"/><path d="M27 91V67c0-13 10-24 23-24s23 11 23 24v24M22 53l-9 38M78 53l9 38M30 19c8-12 35-12 42 3-9 3-29 5-42-3Z"/></svg>',
+    local: '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="31" r="15"/><path d="M27 91V67c0-13 10-24 23-24s23 11 23 24v24M20 91V62l13-9M80 91V62L67 53M39 15c16-8 31 0 36 10H45Z"/></svg>',
+    company: '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M18 91V35l31-15v71M49 91V45l33 13v33M29 43h9M29 55h9M29 67h9M29 79h9M59 59h10M59 70h10M59 81h10"/></svg>'
+  };
+  return `<button class="role-card" data-role="${role}"><span class="pin" aria-hidden="true"></span><div class="avatar-stamp">${icons[icon]}</div><h2>${label}</h2><p>${subtitle}</p><span class="role-symbol" aria-hidden="true">${icon === 'company' ? '▣' : icon === 'local' ? '◆' : '◎'}</span></button>`;
+}
 
 function renderAuth(role) {
   setTitle(roles[role], true, 'Regresar');
