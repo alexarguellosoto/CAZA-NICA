@@ -7,19 +7,26 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+  <div class="topography" aria-hidden="true"></div>
   <div class="app-shell">
+    <section class="masthead" aria-label="Identidad de CAZA NICA">
+      <div class="wordmark" aria-label="CAZA NICA">
+        <strong>CAZ<span class="target-letter">A</span></strong>
+        <span class="wordmark-rule"><i></i><b>NICA</b><i></i></span>
+      </div>
+      <p>Descubrí. Explorá. Conectá.</p>
+      <div class="country-mark" aria-hidden="true">NIC</div>
+    </section>
     <header class="topbar">
       <button id="backBtn" class="ghost hidden" type="button">Cerrar sesión</button>
+      <span class="header-sight" aria-hidden="true">⌖</span>
       <h1 id="screenTitle">¿QUÉ SOS?</h1>
-      <div class="brand" aria-label="CAZA NICA"><img src="img/logo.png" alt="CAZA NICA" onerror="this.hidden=true; this.nextElementSibling.hidden=false"><div class="brand-fallback" hidden><span>CAZA</span><small>NICA</small></div></div>
+      <div class="brand" aria-label="CAZA NICA"><span>CAZA</span><small>NICA</small></div>
     </header>
 
     <main id="app"></main>
+    <footer><span>♠</span> Explorá con respeto. Protegé lo que amás. <span>♠</span></footer>
   </div>
-
-  <template id="logoTemplate">
-    <div class="mini-logo"><img src="img/logo.png" alt="CAZA NICA"><div class="brand-fallback"><span>CAZA</span><small>NICA</small></div></div>
-  </template>
 
   <script src="js/app.js"></script>
 </body>
